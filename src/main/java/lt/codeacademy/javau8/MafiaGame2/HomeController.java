@@ -1,9 +1,6 @@
 package lt.codeacademy.javau8.MafiaGame2;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -26,12 +23,11 @@ public class HomeController {
     public List<User> getAllUsers(){
         return userService.findAll();
     }
-    @PostMapping("/addProduct")
-    public Product addProduct(@RequestBody Product product){
-        System.out.println(product);
-        //return new User(1L, "Danas", GameRole.CITIZEN);
-        return product;
-    }
 
+    @PostMapping("/update/{userId}")
+    public String updateUser(@PathVariable Long userId, @RequestBody User updatedUser) {
+        String message = userService.updateUser(userId, updatedUser);
+        return message;
+    }
 }
 
