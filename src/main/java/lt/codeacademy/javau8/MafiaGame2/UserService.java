@@ -3,6 +3,7 @@ package lt.codeacademy.javau8.MafiaGame2;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 @Service
@@ -33,10 +34,24 @@ public class UserService {
             User user = users.get(i);
             if (user.getId().equals(userId)) {
                 users.set(i, updatedUser);
-                return "Player updated!";
+                return "Player with ID " +
+                        userId +
+                        " updated to:\n" +
+                        updatedUser;
             }
         }
-        return "There is no such player.";
+        return "There is no such player with ID " + userId;
+    }
+
+    public String deleteUser(Long userId) {
+        for (Iterator<User> iterator = users.iterator(); iterator.hasNext();) {
+            User user = iterator.next();
+            if (user.getId().equals(userId)) {
+                iterator.remove();
+                return "Player " + "'" + user + "'" + " was deleted!";
+            }
+        }
+        return "There is no such player with ID " + userId;
     }
 
 }

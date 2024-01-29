@@ -29,5 +29,11 @@ public class HomeController {
         String message = userService.updateUser(userId, updatedUser);
         return message;
     }
+
+    @PostMapping("/delete/{userId}")
+    public String deleteUser(@PathVariable Long userId){
+        String message = userService.deleteUser(userId);
+        return message;
+    }
 }
 
