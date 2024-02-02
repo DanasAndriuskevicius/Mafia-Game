@@ -3,7 +3,7 @@ package lt.codeacademy.javau8.MafiaGame2;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+@CrossOrigin
 @RestController
 public class HomeController {
 
@@ -14,19 +14,19 @@ public class HomeController {
     }
 
     @PostMapping("/add")
-    public User addUser(@RequestBody User user){
-        System.out.println(user);
-        return userService.addUser(user);
+    public UserDTO addUser(@RequestBody UserDTO userDTO){
+        System.out.println(userDTO);
+        return userService.addUser(userDTO);
     }
 
     @GetMapping("/all")
-    public List<User> getAllUsers(){
+    public List<UserDTO> getAllUsers(){
         return userService.findAll();
     }
 
     @PostMapping("/update/{userId}")
-    public String updateUser(@PathVariable Long userId, @RequestBody User updatedUser) {
-        String message = userService.updateUser(userId, updatedUser);
+    public String updateUser(@PathVariable Long userId, @RequestBody UserDTO updatedUserDTO) {
+        String message = userService.updateUser(userId, updatedUserDTO);
         return message;
     }
 

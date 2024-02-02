@@ -10,34 +10,92 @@ import java.util.List;
 public class UserService {
      private List<User> users;
 
+
      public UserService(){
          users = new ArrayList<>();
-         users.add(new User(1L,"Tadas", GameRole.CITIZEN));
-         users.add(new User(2L,"Martynas", GameRole.MAFIA));
-         users.add(new User(3L,"Sarunas", GameRole.MAFIABOSS));
-         users.add(new User(4L,"Egle", GameRole.SHERIFF));
-         users.add(new User(5L,"Tautvydas", GameRole.ADMIN));
 
+         // dummy data
+         users.add(new User(1L, "Tomas",GameRole.CITIZEN));
+         users.add(new User(2L, "ALgis",GameRole.MAFIA));
+         users.add(new User(3L, "Egle",GameRole.MAFIABOSS));
+         users.add(new User(4L, "Martynas",GameRole.SHERIFF));
+         users.add(new User(5L, "Tautvydas",GameRole.ADMIN));
+         users.add(new User(6L, "Tomas",GameRole.CITIZEN));
+         users.add(new User(7L, "ALgis",GameRole.MAFIA));
+         users.add(new User(8L, "Egle",GameRole.CITIZEN));
+         users.add(new User(9L, "Martynas",GameRole.CITIZEN));
+         users.add(new User(10L, "Tautvydas",GameRole.CITIZEN));
      }
 
-  public List<User> findAll(){
-        return users;
+    public List<UserDTO> findAll() {
+        List<UserDTO> userDTOs = new ArrayList<>();
+        for (User user : users) {
+            userDTOs.add(new UserDTO(user));
+        }
+        return userDTOs;
+    }
+    //modifikuotas add metodas
+
+    public UserDTO addUser(UserDTO userDTO) {
+        if (users.size() < 11) {
+            int mafiaCount = 0;
+            boolean hasSheriff = false;
+            boolean hasMafiaBoss = false;
+            boolean hasAdmin= false;
+
+            for (User user : users) {
+                if (user.getId().equals(userDTO.getId())) {
+                    return null; // Jei rastas vartotojas su tuo paciu id
+                }
+                if (user.getGameRole() == GameRole.SHERIFF) {
+                    hasSheriff = true;
+                } else if (user.getGameRole() == GameRole.MAFIABOSS) {
+                    hasMafiaBoss = true;
+                } else if (user.getGameRole() == GameRole.ADMIN) {
+                    hasAdmin = true;
+                } else if (user.getGameRole() == GameRole.MAFIA) {
+                    mafiaCount++;
+                }
+            }
+            if ((!hasSheriff && userDTO.getGameRole().equals("SHERIFF")) ||
+                    (!hasMafiaBoss && userDTO.getGameRole().equals("MAFIABOSS")) ||
+                    (!hasAdmin && userDTO.getGameRole().equals("ADMIN")) ||
+                    (mafiaCount < 2 && userDTO.getGameRole().equals("MAFIA")) ||
+                    (userDTO.getGameRole().equals("CITIZEN"))) {
+                User user = new User(userDTO);
+                users.add(user);
+                return new UserDTO(user);
+            } else {
+                return null;
+            }
+        } else {
+            return null;
+        }
     }
 
-     public User addUser(User user){
-         users.add(user);
-         return user;
-     }
+        //senas add metodas
+    /* public UserDTO addUser(UserDTO userDTO){
+         if(users.size() < 11) {
+             User user = new User(userDTO);
+             users.add(user);
+             return new UserDTO(user);
+         }else {
+             return null;
+         }
+     }*/
 
-    public String updateUser(Long userId, User updatedUser) {
+
+    //update metodas, kuris nemodifikuoja userId
+    public String updateUser(Long userId, UserDTO updatedUserDTO) {
         for (int i = 0; i < users.size(); i++) {
             User user = users.get(i);
             if (user.getId().equals(userId)) {
-                users.set(i, updatedUser);
-                return "Player with ID " +
+                user.setName(updatedUserDTO.getName());//pakeiciu varda
+                user.setGameRole(Utils.createGameRole(updatedUserDTO.getGameRole()));//pakeiciu gameRole
+
+                return "Player: " +
                         userId +
-                        " updated to:\n" +
-                        updatedUser;
+                        " was successfully updated to: " + user;
             }
         }
         return "There is no such player with ID " + userId;
@@ -48,7 +106,7 @@ public class UserService {
             User user = iterator.next();
             if (user.getId().equals(userId)) {
                 iterator.remove();
-                return "Player " + "'" + user + "'" + " was deleted!";
+                return "Player " + "'" + user + "'" + " was successfully deleted!";
             }
         }
         return "There is no such player with ID " + userId;

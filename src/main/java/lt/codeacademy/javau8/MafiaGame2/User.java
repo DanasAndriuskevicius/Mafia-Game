@@ -5,14 +5,22 @@ class User {
     String name;
     GameRole gameRole;
 
+
     public User() {
     }
 
-    public User(Long id, String name, GameRole gameRole) {
+   public User(Long id, String name, GameRole gameRole) {
         this.id = id;
         this.name = name;
         this.gameRole = gameRole;
     }
+
+    public User(UserDTO userDTO) {
+        this.id = userDTO.getId();
+        this.name = userDTO.getName();
+        this.gameRole = Utils.createGameRole(userDTO.getGameRole());
+    }
+
 
     public Long getId() {
         return id;
@@ -41,6 +49,8 @@ class User {
     @Override
     public String toString() {
         return
-                id + " " + name + " " + gameRole ;
+                id + " " + name + " " + gameRole;
     }
+
+
 }
