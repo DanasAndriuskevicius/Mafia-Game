@@ -11,34 +11,33 @@ public class HomeController {
 
     private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 
-    UserService userService;
+    PlayerService playerService;
 
-    public HomeController(UserService userService) {
-        this.userService = userService;
+    public HomeController(PlayerService playerService) {
+        this.playerService = playerService;
     }
 
     @PostMapping("/add")
-    public UserDTO addUser(@RequestBody UserDTO userDTO){
+    public PlayerDTO addPlayer(@RequestBody PlayerDTO playerDTO){
         logger.info("Handling ADD endpoint");
-        return userService.addUser(userDTO);
+        return playerService.addPlayer(playerDTO);
     }
 
     @GetMapping("/all")
-    public List<UserDTO> getAllUsers(){
-        return userService.findAll();
+    public List<PlayerDTO> getAllPlayers(){
+        return playerService.findAll();
     }
 
-    @PutMapping ("/update/{userId}")
-    public UserDTO updateUser(@PathVariable Long userId, @RequestBody UserDTO updatedUserDTO) {
+    @PutMapping ("/update/{playerId}")
+    public PlayerDTO updatePlayer(@PathVariable Long playerId, @RequestBody PlayerDTO updatedPlayerDTO) {
         logger.info("Handling UPDATE endpoint");
-        return userService.updateUser(userId, updatedUserDTO);
+        return playerService.updatePlayer(playerId, updatedPlayerDTO);
     }
 
     @DeleteMapping ("/delete/{userId}")
-    public String deleteUser(@PathVariable Long userId){
+    public String deletePlayer(@PathVariable Long userId){
         logger.info("Handling DELETE endpoint");
-        String message = userService.deleteUser(userId);
-        return message;
+        return playerService.deletePlayer(userId);
     }
 }
 
