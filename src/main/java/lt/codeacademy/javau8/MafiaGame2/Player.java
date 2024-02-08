@@ -1,7 +1,12 @@
 package lt.codeacademy.javau8.MafiaGame2;
 
-class Player {
+import jakarta.persistence.*;
 
+@Entity
+@Table(name = "player")
+class Player {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     Long id;
     String name;
     GameRole gameRole;
