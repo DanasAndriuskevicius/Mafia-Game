@@ -1,5 +1,10 @@
-package lt.codeacademy.javau8.MafiaGame2;
+package lt.codeacademy.javau8.MafiaGame2.services;
 
+import lt.codeacademy.javau8.MafiaGame2.GameRole;
+import lt.codeacademy.javau8.MafiaGame2.PlayerDTO;
+import lt.codeacademy.javau8.MafiaGame2.controllers.PlayersController;
+import lt.codeacademy.javau8.MafiaGame2.entities.Player;
+import lt.codeacademy.javau8.MafiaGame2.repositories.PlayerRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,20 +23,20 @@ public class PlayerService {
         this.playerRepository = playerRepository;
     }
 
-    static private List<Player> players;
+    //dummy data reikia iskelti i DataLoader kalse
+    /*static private List<Player> players;
      public PlayerService(){
          players = new ArrayList<>();
 
-         // dummy data
         players.add(new Player(1L, "Tomas",GameRole.CITIZEN));
         players.add(new Player(2L, "ALgis",GameRole.MAFIA));
          //players.add(new Player(3L, "Egle",GameRole.MAFIABOSS));
          //players.add(new Player(4L, "Martynas",GameRole.SHERIFF));
          //players.add(new Player(5L, "Tautvydas",GameRole.ADMIN));
 
-     }
+     }*/
 
-    // get all players metodas NAUJAS!!!
+    // get all players metodas
     public List<PlayerDTO> getAll() {
         List<PlayerDTO> playerDTOS = new ArrayList<>();
         for (Player player : playerRepository.findAll()) {
@@ -66,9 +71,6 @@ public class PlayerService {
             boolean hasAdmin = false;
 
             for (Player player : allPlayers) {
-               /* if (player.getId().equals(playerDTO.getId())) {
-                    return null; // Jei rastas vartotojas su tuo pačiu id
-                }*/
                 if (player.getGameRole() == GameRole.SHERIFF) {
                     hasSheriff = true;
                 } else if (player.getGameRole() == GameRole.MAFIABOSS) {
@@ -102,15 +104,12 @@ public class PlayerService {
         }
     }
 
-    //update metodas, kuris NEmodifikuoja userId
+    //update metodas, kuris NEmodifikuoja userId ir gameRole
     public PlayerDTO updatePlayer(Long playerId, PlayerDTO updatedPlayerDTO) {
         Optional<Player> optionalPlayer = playerRepository.findById(playerId);
         if (optionalPlayer.isPresent()) {
             Player player = optionalPlayer.get();
             player.setName(updatedPlayerDTO.getName());//pakeicia varda
-            player.setGameRole(Utils.createGameRole(updatedPlayerDTO.getGameRole()));//pakeicia gameRole
-            //updatedPlayerDTO.setId(playerId);
-            //updatedPlayerDTO.setImageUrl( Utils.createGameRole(updatedPlayerDTO.getGameRole()).getImageUrl());
 
             Player updatedPlayer = playerRepository.save(player);
             return new PlayerDTO(updatedPlayer);

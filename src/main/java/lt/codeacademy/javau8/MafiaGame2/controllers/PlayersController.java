@@ -1,5 +1,7 @@
-package lt.codeacademy.javau8.MafiaGame2;
+package lt.codeacademy.javau8.MafiaGame2.controllers;
 
+import lt.codeacademy.javau8.MafiaGame2.PlayerDTO;
+import lt.codeacademy.javau8.MafiaGame2.services.PlayerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

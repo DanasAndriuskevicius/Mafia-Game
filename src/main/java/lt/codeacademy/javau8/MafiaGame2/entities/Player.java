@@ -1,15 +1,18 @@
-package lt.codeacademy.javau8.MafiaGame2;
+package lt.codeacademy.javau8.MafiaGame2.entities;
 
 import jakarta.persistence.*;
+import lt.codeacademy.javau8.MafiaGame2.GameRole;
+import lt.codeacademy.javau8.MafiaGame2.PlayerDTO;
+import lt.codeacademy.javau8.MafiaGame2.Utils;
 
 @Entity
 @Table(name = "player")
-class Player {
+public class Player {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    Long id;
-    String name;
-    GameRole gameRole;
+    private Long id;
+    private String name;
+    private GameRole gameRole;
 
 
     public Player() {
