@@ -53,8 +53,8 @@ public class PlayerService {
 
 
     //get one player metodas
-    public PlayerDTO getPlayerById(Long playerId) {
-         Player player = playerRepository.findById(playerId).orElse(null);
+    public PlayerDTO getPlayerById(Long id) {
+         Player player = playerRepository.findById(id).orElse(null);
              if (player != null){
                  return new PlayerDTO(player);
              }
@@ -105,8 +105,8 @@ public class PlayerService {
     }
 
     //update metodas, kuris NEmodifikuoja userId ir gameRole
-    public PlayerDTO updatePlayer(Long playerId, PlayerDTO updatedPlayerDTO) {
-        Optional<Player> optionalPlayer = playerRepository.findById(playerId);
+    public PlayerDTO updatePlayer(Long id, PlayerDTO updatedPlayerDTO) {
+        Optional<Player> optionalPlayer = playerRepository.findById(id);
         if (optionalPlayer.isPresent()) {
             Player player = optionalPlayer.get();
             player.setName(updatedPlayerDTO.getName());//pakeicia varda
@@ -118,13 +118,13 @@ public class PlayerService {
     }
 
     //delete metodas
-    public String deletePlayer(Long playerId) {
-        Optional<Player> player = playerRepository.findById(playerId);
+    public String deletePlayer(Long id) {
+        Optional<Player> player = playerRepository.findById(id);
         if (player.isPresent()) {
-            playerRepository.deleteById(playerId);
-            return "Player with ID " + playerId + " was successfully deleted!";
+            playerRepository.deleteById(id);
+            return "Player with ID " + id + " was successfully deleted!";
         } else {
-            return "There is no such player with ID " + playerId;
+            return "There is no such player with ID " + id;
         }
     }
 
