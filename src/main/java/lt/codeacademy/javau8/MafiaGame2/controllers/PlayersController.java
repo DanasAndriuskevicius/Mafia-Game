@@ -21,29 +21,29 @@ public class PlayersController {
         this.playerService = playerService;
     }
 
-    @PostMapping("/add")
+    @PostMapping("/")
     public PlayerDTO createPlayer(@RequestBody PlayerDTO playerDTO){
         logger.info("Handling ADD endpoint");
         return playerService.addPlayer(playerDTO);
     }
 
-    @GetMapping("/all")
+    @GetMapping("/")
     public List<PlayerDTO> getAllPlayers(){
         return playerService.getAll();
     }
 
-    @GetMapping("/getPlayerById/{playerId}")
+    @GetMapping("/{playerId}")
     public PlayerDTO getPlayerById(@PathVariable Long playerId) {
         return playerService.getPlayerById(playerId);
     }
 
-    @PutMapping ("/update/{playerId}")
+    @PutMapping ("/{playerId}")
     public PlayerDTO updatePlayer(@PathVariable Long playerId, @RequestBody PlayerDTO updatedPlayerDTO) {
         logger.info("Handling UPDATE endpoint");
         return playerService.updatePlayer(playerId, updatedPlayerDTO);
     }
 
-    @DeleteMapping ("/delete/{playerId}")
+    @DeleteMapping ("/{playerId}")
     public String deletePlayer(@PathVariable Long playerId){
         logger.info("Handling DELETE endpoint");
         return playerService.deletePlayer(playerId);
