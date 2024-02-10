@@ -63,6 +63,12 @@ public class PlayerService {
 
     //add player su random gameRole
     public PlayerDTO addPlayer(PlayerDTO playerDTO) {
+
+        // Patikriname, ar playerDTO vardas yra tuscias
+        if (playerDTO.getName() == null || playerDTO.getName().isEmpty()) {
+            throw new IllegalArgumentException("Player name cannot be empty");
+        }
+
         List<Player> allPlayers = playerRepository.findAll();
         if (allPlayers.size() < 11) {
             int mafiaCount = 0;
