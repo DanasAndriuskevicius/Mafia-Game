@@ -23,20 +23,7 @@ public class PlayerService {
         this.playerRepository = playerRepository;
     }
 
-    //dummy data reikia iskelti i DataLoader kalse
-    /*static private List<Player> players;
-     public PlayerService(){
-         players = new ArrayList<>();
 
-        players.add(new Player(1L, "Tomas",GameRole.CITIZEN));
-        players.add(new Player(2L, "ALgis",GameRole.MAFIA));
-         //players.add(new Player(3L, "Egle",GameRole.MAFIABOSS));
-         //players.add(new Player(4L, "Martynas",GameRole.SHERIFF));
-         //players.add(new Player(5L, "Tautvydas",GameRole.ADMIN));
-
-     }*/
-
-    // get all players metodas
     public List<PlayerDTO> getAll() {
         List<PlayerDTO> playerDTOS = new ArrayList<>();
         for (Player player : playerRepository.findAll()) {
@@ -44,15 +31,7 @@ public class PlayerService {
         }
         return playerDTOS;
     }
-    // arba galima uzrasyti get All metoda taip:
-   /* public List<PlayerDTO> getAll() {
-        return playerRepository.findAll().stream()
-                .map(PlayerDTO::new)
-                .collect(Collectors.toList());
-    }*/
 
-
-    //get one player metodas
     public PlayerDTO getPlayerById(Long id) {
          Player player = playerRepository.findById(id).orElse(null);
              if (player != null){
@@ -61,10 +40,8 @@ public class PlayerService {
         return null;
     }
 
-    //add player su random gameRole
     public PlayerDTO addPlayer(PlayerDTO playerDTO) {
 
-        // Patikriname, ar playerDTO vardas yra tuscias
         if (playerDTO.getName() == null || playerDTO.getName().isEmpty()) {
             throw new IllegalArgumentException("Player name cannot be empty");
         }
@@ -88,7 +65,6 @@ public class PlayerService {
                 }
             }
 
-            // Sukuriame sąrašą su visais vaidmenimis, išskyrus jau priskirtus
             List<GameRole> availableRoles = new ArrayList<>();
             if (!hasSheriff) availableRoles.add(GameRole.SHERIFF);
             if (!hasMafiaBoss) availableRoles.add(GameRole.MAFIABOSS);
@@ -96,12 +72,10 @@ public class PlayerService {
             if (mafiaCount < 2) availableRoles.add(GameRole.MAFIA);
             availableRoles.add(GameRole.CITIZEN);
 
-            // Priskiriame atsitiktinį vaidmenį
             Random random = new Random();
             GameRole randomRole = availableRoles.get(random.nextInt(availableRoles.size()));
             playerDTO.setGameRole(randomRole.toString());
 
-            // Pridedame naują vartotoją
             Player player = new Player(playerDTO);
             playerRepository.save(player);
             return new PlayerDTO(player);
@@ -110,12 +84,11 @@ public class PlayerService {
         }
     }
 
-    //update metodas, kuris NEmodifikuoja userId ir gameRole
     public PlayerDTO updatePlayer(Long id, PlayerDTO updatedPlayerDTO) {
         Optional<Player> optionalPlayer = playerRepository.findById(id);
         if (optionalPlayer.isPresent()) {
             Player player = optionalPlayer.get();
-            player.setName(updatedPlayerDTO.getName());//pakeicia varda
+            player.setName(updatedPlayerDTO.getName());
 
             Player updatedPlayer = playerRepository.save(player);
             return new PlayerDTO(updatedPlayer);
@@ -123,7 +96,6 @@ public class PlayerService {
         return null;
     }
 
-    //delete metodas
     public String deletePlayer(Long id) {
         Optional<Player> player = playerRepository.findById(id);
         if (player.isPresent()) {
