@@ -1,26 +1,14 @@
 # Mafia-Game
 This project is a Java Spring Boot implementation of the popular Mafia party game.
 
-## Table of Contents
-
-- [Introduction](#introduction)
-- [Features](#features)
-- [Prerequisites](#prerequisites)
-- [Installation](#installation)
-- [Database Setup](#database-setup)
-- [Running the Project](#running-the-project)
-
 ## Introduction
-
 The Mafia game is a social deduction game, where players are assigned roles and must work together to uncover the Mafia members among them, while the Mafia tries to eliminate the other players. This project aims to provide a digital platform for playing the Mafia game.
 
 ## Features
-
 - CRUD functions for player managing
 - Role assignment (Mafia, Townsfolk, etc.)
 
 ## Prerequisites
-
 Before running the project, make sure you have the following installed:
 
 - Java Development Kit (JDK) 8 or higher
@@ -28,7 +16,6 @@ Before running the project, make sure you have the following installed:
 - MySQL database server
 
 ## Installation
-
 1. Clone the project repository:
 
 ```bash
