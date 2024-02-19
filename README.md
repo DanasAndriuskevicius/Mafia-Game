@@ -17,8 +17,6 @@ Before running the project, make sure you have the following installed:
 
 ## Installation
 1. Clone the project repository:
-
-```bash
 git clone <repository_url>
 
 2. Navigate to the project directory:
